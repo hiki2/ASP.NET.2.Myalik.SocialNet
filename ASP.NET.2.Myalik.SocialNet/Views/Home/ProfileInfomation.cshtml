@@ -1,0 +1,92 @@
+﻿@model ASP.NET._2.Myalik.SocialNet.Models.PageViewModel
+<div class="accordion" data-role="accordion" style="margin-bottom: 50px;">
+    <div class="frame active">
+        <div class="heading">
+            <span style="font-family: 'Chewy', cursive; font-size: 11pt;">@Model.Profile.Name @Model.Profile.LastName Information</span>
+            <span class="mif-stack icon" style="color: white;"></span>
+        </div>
+        <div class="content">
+            <div class="row cells2">
+                <div class="cell">
+                    <div class="window" style="margin-bottom: 10px;">
+                        <div class="window-caption align-center bg-gray">
+                            <span class="window-caption-title">
+                                <span style="color: #FFFFFF;">General Information</span> <a class="place-right" href="@Url.Action("EditProfileInformation","User")"><span class="mif-pencil" style="color: white;"></span></a>
+                            </span>
+                        </div>
+                        <div class="window-content">
+                            <div class="row cells2">
+                                <div class="cell">
+                                    Birth Date :<br>
+                                    <hr class="bg-darkerGray">
+                                    Mobile :<br>
+                                    <hr class="bg-darkerGray">
+                                    Email :<br>
+                                    <hr class="bg-darkerGray">
+                                    Country :<br>
+                                    <hr class="bg-darkerGray">
+                                </div>
+                                <div class="cell">
+                                    @Model.Profile.BirthDate.Date.ToShortDateString()<br>
+                                    <hr class="bg-darkerGray">
+                                    @Model.User.Mobile<br>
+                                    <hr class="bg-darkerGray">
+                                    @Model.User.Email<br>
+                                    <hr class="bg-darkerGray">
+                                    @Model.Profile.Country
+                                    <hr class="bg-darkerGray">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        //Elements
+                        string[][] array =
+                        {
+                            new[] {@Model.Profile.About, "About"},
+                            new[] {@Model.Profile.Activity, "Activity"},
+                            new[] {@Model.Profile.Interests, "Interestrs"},
+                            new[] {@Model.Profile.FavoriteFilms, "Favorite Films"},
+                            new[] {@Model.Profile.FavoriteMusic, "Favorite Music"}
+                        };
+                    }
+                    @for (var i = 0; i < 2; i++)
+                    {
+                        if ((array[i][0] != null) && (array[i][0] != string.Empty))
+                        {
+                            <div class="window" style="margin-bottom: 10px;">
+                                <div class="window-caption align-center bg-gray">
+                                    <span class="window-caption-title">
+                                        <span style="color: #FFFFFF;">@array[i][1]</span>
+                                    </span>
+                                </div>
+                                <div class="window-content align-justify" style="word-wrap:break-word;">
+                                    @array[i][0]
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="cell">
+                    @for (var i = 2; i < array.Length; i++)
+                    {
+                        if ((array[i][0] != null) && (array[i][0] != string.Empty))
+                        {
+                            <div class="window" style="margin-bottom: 10px;">
+                                <div class="window-caption align-center bg-gray">
+                                    <span class="window-caption-title">
+                                        <span style="color: #FFFFFF;">@array[i][1]</span>
+                                    </span>
+                                </div>
+                                <div class="window-content align-justify" style="word-wrap:break-word;">
+                                    @array[i][0]
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

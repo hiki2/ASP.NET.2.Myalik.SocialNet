@@ -1,0 +1,39 @@
+﻿@model ASP.NET._2.Myalik.SocialNet.Models.ProfileViewModel
+@{
+    var image = Model.Avatar == null ? "/Resources/noImage.jpg" : $"data:image/jpeg;base64,{Convert.ToBase64String(Model.Avatar)}";
+}
+<div class="image-container bordered" style="margin-bottom: 15px;">
+    <div class="frame">
+        <img style="width: 225px; height: 400px;" src="@image" alt=""/>
+        @if ((int) Profile["id"] == Model.id)
+        {
+            <button class="button top full-size rounded bg-darkTeal bg-active-darkCyan" onclick="showDialog('dialog')"><span style="color: white;">Change Avatar</span></button>
+        }
+    </div>   
+</div>
+<div data-role="dialog" id="dialog" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" class="padding20 dialog">
+    <h1>The process of downloading a new avatar</h1>
+    @using (@Html.BeginForm("AvatarUpload", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <p>
+            <ol class="numeric-list">
+                <li>Maecenas at faucibus dolor. Aenean feugiat enim dolor, vel aliquet ante lobortis aliquat,<br>
+                In eget odio id diam porttitor laoreet. Praesent dapibus ut eros a accumsan. Sed in eni le.</li>
+                <li>Vestibulum nunc tellus, fringilla id mattis sed, condimentum nec justo. In turpi ar, meu,<br>
+                pellentesque consectetur lectus. Nullam feugiat pharetra ligula in pulvinar. Nulla facilis.</li>
+                <li>Nam eu tristique risus. Nunc posuere sapien diam, a congue ex aliquam nec. Aenean nec ul,<br>
+                Vivamus dolor felis, condimentum id nisi volutpat, maximus congue elit condimentum nec jus.</li>
+                <li>Vestibulum consequat, lectus sit amet fermentum egestas, libero tortor scelerisque dolo,<br>
+                Nulla eu malesuada sapien, vitae efficitur velit. Donec quis arcu imperdiet, mollis velite.</li>
+                <li>Fusce vulputate erat sit amet ex dignissim aliquet. Fusce elementum felis ac leo posuere,<br>
+                vel malesuada neque. Donec elit odio, efficitur vel urna ac, tempor amet fermentum egestas.</li>
+                <li>Supported formats: jpeg.</li>
+            </ol>    
+        </p>
+        <div class="input-control file" data-role="input" style="width: 550px">
+            <input type="file" name="file" accept="image/jpeg" id="file">
+            <button class="button"><span class="mif-folder"></span></button>
+        </div>
+        <button class="button success block-shadow-success">Загрузить</button>
+    }
+</div> 

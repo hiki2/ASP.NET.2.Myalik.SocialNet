@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href='https://fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>
+    <style>
+        .input-validation-error {
+            background-color: #f5a39d;
+        }
+    </style>
+    @Styles.Render("~/Content/mentro-ui")
+    @Scripts.Render("~/bundles/metro-ui")
+    <script>
+        function showCharm(id) {
+            var charm = $("#" + id + "-charm").data("charm");
+            if (charm.element.data("opened") === true) {
+                charm.close();
+            } else {
+                charm.open();
+            }
+        }
+
+        function showDialog(id) {
+            var dialog = $("#" + id).data('dialog');
+            if (!dialog.element.data('opened')) {
+                dialog.open();
+            } else {
+                dialog.close();
+            }
+        }
+
+
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: false });
+        });
+
+        function Success() {
+            $.Notify({
+                caption: 'Saved',
+                content: '@ViewBag.Message',
+                type: 'success'
+            });
+        }
+
+        function Failure() {
+            $.Notify({
+                caption: 'Failed',
+                content: 'Can\'t save user',
+                type: 'alert'
+            });
+        }
+
+    </script>
+</head>
+<body class="preloader-metro" style="overflow-y: scroll;">
+    @{
+        var image = Profile["Avatar"] == null ? "/Resources/no-image-sqr.png" : $"data:image/jpeg;base64,{Convert.ToBase64String((byte[])Profile["Avatar"])}";
+    }
+    <div>
+        <header class="app-bar fixed-top darcula" data-role="appbar">
+            <div class="container">
+                <a class="app-bar-element branding main-font" href="~/Home/@Profile["id"]" style="font-family: 'Chewy', cursive; font-size: 16pt;">Social Net</a>
+                <ul class="app-bar-menu">
+                    <li onclick="showCharm('left')">
+                        <a>
+                            <div class="image-format-cycle">
+                                <img style="width: 35px; height: 35px; border-radius: 50%; background-size: cover; background-repeat: no-repeat;" src="@image" alt="" />                              
+                            </div>
+                        </a>@Profile["Name"] @Profile["LastName"]   
+                    </li>
+                </ul>
+                <div class="app-bar-pullbutton automatic"></div>
+                <ul class="app-bar-menu place-right" data-flexdirection="reverse">
+                    <li>
+                        <div class="input-control text">
+                            <input type="text" placeholder="Search...">
+                        </div>
+                    </li>
+                    <li>
+                        <a href="" class="dropdown-toggle">Help</a>
+                        <ul class="d-menu place-right" data-role="dropdown">
+                            <li><a href="">Terms of use</a></li>
+                            <li><a href="">Support service</a></li>
+                            <li class="divider"></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </header>
+    </div>
+    <div data-role="charm" data-position="left" id="left-charm" class="charm left-side">
+        <h1 class="text-light align-center"><a href="../Home/@Profile["id"]" style="color:white">@Profile["Name"] @Profile["LastName"]</a></h1>
+        <hr class="thin">
+        <ul class="vertical-menu full-size" style="color: #FFFFFF;">
+            <li><a href="../Friends/@Profile["id"]"><span class="mif-stack"></span> Friends</a></li>
+            <li><a href=""><span class="mif-bubbles"></span> Messages</a></li>
+            <li><a href=""><span class="mif-images"></span> Images</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li><a href=@Url.Action("Admin","Admin")><span class="mif-widgets"></span> Admin</a></li>
+            }
+            <li><hr class="thin"></li>
+            <li><a href="@Url.Action("LogOff","Account")"><span class="mif-exit"></span> Exit</a></li>
+        </ul>
+        <span class="charm-closer"></span>
+    </div>
+    <div id="ParentDiv" class="container page-content" style="margin-top: 80px; margin-bottom: 80px;">
+        
+        @RenderBody()
+    </div>
+    <footer class="align-center fixed-bottom full-size bg-darkerGray">
+        <p style="color: #FFFFFF;">&copy; @DateTime.Now.Year - Myalik Ilya Productions</p>
+    </footer>
+</body>
+</html>

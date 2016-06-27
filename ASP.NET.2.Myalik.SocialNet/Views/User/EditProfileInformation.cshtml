@@ -1,0 +1,80 @@
+﻿@model ASP.NET._2.Myalik.SocialNet.Models.ProfileViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="grid align-center" style="margin-left: 12%; margin-right: 12%;">
+        <div class="row cells2">
+            @Html.ValidationSummary(true, "")
+            <div class="cell">
+                <div class="window">
+                    <div class="window-caption">
+                        <span class="icon mif-info"></span>
+                        <span class="title">@Html.LabelFor(model => model.About)</span>
+                    </div>
+                    <div class="content" style="height: 150px; margin-bottom: 20px">
+                        <div class="input-control textarea full-size" data-role="input">
+                            <textarea id="About" name="About" class="block-shadow-impact" rows="7" maxlength="500" wrap="hard" style="resize: none; border: none; margin-bottom: 10px;">@Model.About</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="window">
+                    <div class="window-caption">
+                        <span class="icon mif-motorcycle"></span>
+                        <span class="title">@Html.LabelFor(model => model.Activity)</span>
+                    </div>
+                    <div class="content" style="height: 150px; margin-bottom: 20px">
+                        <div class="input-control textarea full-size" data-role="input">
+                            <textarea id="Activity" name="Activity" class="block-shadow-impact" rows="7" maxlength="500" wrap="hard" style="resize: none; border: none; margin-bottom: 10px;">@Model.Activity</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="window">
+                    <div class="window-caption">
+                        <span class="icon mif-medal"></span>
+                        <span class="title">@Html.LabelFor(model => model.Interests)</span>
+                    </div>
+                    <div class="content" style="height: 150px; margin-bottom: 20px">
+                        <div class="input-control textarea full-size" data-role="input">
+                            <textarea id="Interests" name="Interests" class="block-shadow-impact" rows="7" maxlength="500" wrap="hard" style="resize: none; border: none; margin-bottom: 10px;">@Model.Interests</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="window">
+                    <div class="window-caption">
+                        <span class="icon mif-music"></span>
+                        <span class="title">@Html.LabelFor(model => model.FavoriteMusic)</span>
+                    </div>
+                    <div class="content" style="height: 150px; margin-bottom: 20px">
+                        <div class="input-control textarea full-size" data-role="input">
+                            <textarea id="FavoriteMusic" name="FavoriteMusic" class="block-shadow-impact" rows="7" maxlength="500" wrap="hard" style="resize: none; border: none; margin-bottom: 10px;">@Model.FavoriteMusic</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="window">
+                    <div class="window-caption">
+                        <span class="icon mif-film"></span>
+                        <span class="title">@Html.LabelFor(model => model.FavoriteFilms)</span>
+                    </div>
+                    <div class="content" style="height: 150px; margin-bottom: 20px">
+                        <div class="input-control textarea full-size" data-role="input">
+                            <textarea id="FavoriteFilms" name="FavoriteFilms" class="block-shadow-impact" rows="7" maxlength="500" wrap="hard" style="resize: none; border: none; margin-bottom: 10px;">@Model.FavoriteFilms</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="image-button" style="margin-bottom: 15px; width: 250px;">Save
+            <span class="icon mif-folder"></span>
+        </button>
+    </div>
+
+}

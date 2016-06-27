@@ -1,0 +1,52 @@
+﻿@model ASP.NET._2.Myalik.SocialNet.Models.PageViewModel
+<div class="grid">
+    <div class="row cells3">
+        <div class="cell">
+            @Html.Partial("Avatar", @Model.Profile)
+            @{
+                if (Model.Profile.id != (int)@Profile["id"])
+                {
+                    <div class="row cells5">
+                        <div class="cell colspan2">
+                            <button class="image-button" onclick="showDialog('MessageDialog')" style="width: 120px">
+                                Send Message
+                                <span class="icon mif-bubbles"></span>
+                            </button>
+                            <div data-role="dialog" id="MessageDialog" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" class="padding20 dialog">
+                                @Html.Partial("../UserMessage/SendMessage")
+                            </div>
+                        </div>
+                        <div class="cell colspan2">
+                            @using (Html.BeginForm("AddDeleteFriend", "User", FormMethod.Post))
+                            {
+                                <input type="hidden" value="@Model.Profile.id" name="friendId" />
+                                if (Model.Friends.FirstOrDefault(friend => (friend.Profile.id == (int)@Profile["id"]) && friend.Confirmed) == null)
+                                {
+                                    <button name="action" value="add" type="submit" class="image-button bg-lightBlue bg-active-blue" style="width: 120px;">
+                                        <span style="color: white;">Add Friend</span>
+                                        <span class="icon mif-checkmark"></span>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button name="action" value="delete" type="submit" class="image-button bg-darkPink bg-active-crimson" style="width: 120px;">
+                                        <span style="color: white;">Delete Friend</span>
+                                        <span class="icon mif-cross"></span>
+                                    </button>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            @Html.Partial("Friends", @Model.Friends)
+        </div>
+        <div class="cell colspan2">
+            @Html.Partial("ProfileInfomation", @Model)
+            <div id="Wall">
+                @Html.Partial("Wall", @Model.MessageWall)
+            </div>
+        </div> 
+    </div>
+</div>
+

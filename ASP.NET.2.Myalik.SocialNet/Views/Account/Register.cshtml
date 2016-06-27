@@ -1,0 +1,100 @@
+﻿@model ASP.NET._2.Myalik.SocialNet.Models.Registration.RegisterModel
+@{
+    ViewBag.Title = "Register";
+    var ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "ParentDiv",
+        HttpMethod = "POST",
+        LoadingElementId = "wait-metro"
+    };
+}
+@Html.AntiForgeryToken()
+@using (Ajax.BeginForm("Register", "Account", ajaxOptions))
+{
+    <h1 class="text-light align-center">Registration</h1>
+    <hr class="thin">
+    <br>
+    <div class="input-control text full-size align-center" data-role="input">
+        @Html.LabelFor(model => model.Email)
+        @Html.EditorFor(model => model.Email, new
+        {
+            htmlAttributes = new
+            {
+                type = "text",
+            }
+        })
+    </div>
+    <br>
+    <br>
+    <div class="input-control password full-size" data-role="input">
+        @Html.LabelFor(model => model.Password)
+        @Html.EditorFor(model => model.Password, new
+        {
+            htmlAttributes = new {type = "password"}
+        })
+        <button class="button helper-button reveal" tabindex="-1" type="button"><span class="mif-looks"></span></button>
+    </div>
+    <br>
+    <br>
+    <div class="input-control password full-size" data-role="input">
+        @Html.LabelFor(model => model.ConfirmPassword)
+        @Html.EditorFor(model => model.ConfirmPassword, new
+        {
+            htmlAttributes = new {type = "password"}
+        })
+        <button class="button helper-button reveal" tabindex="-1" type="button"><span class="mif-looks"></span></button>
+    </div>
+    <br>
+    <br>
+    <div class="input-control password full-size" data-role="input">
+        @Html.LabelFor(model => model.FirstName)
+               @Html.EditorFor(model => model.FirstName, new
+        {
+            htmlAttributes = new {type = "text"}
+        })
+    </div>
+    <br>
+    <br>
+    <div class="input-control password full-size" data-role="input">
+        @Html.LabelFor(model => model.LastName)
+        @Html.EditorFor(model => model.LastName, new
+        {
+            htmlAttributes = new {type = "text"}
+        })
+    </div>
+    <br>
+    <br>
+    <div class="input-control password full-size" data-role="input">
+        @Html.LabelFor(model => model.Mobile)
+        @Html.EditorFor(model => model.Mobile, new
+        {
+            htmlAttributes = new {placeholder = "+375 (●●) ●●●--●●--●●", type = "text"}
+        })
+    </div>
+    <br>
+    <br>
+    <div class="input-control text full-size" data-role="datepicker">
+        @Html.LabelFor(model => model.BirthDate)
+        <input id="BirthDate" name="BirthDate" type="text">
+        <button class="button"><span class="mif-calendar"></span></button>
+    </div>
+    <br>
+    <br>
+    <span class="mif-venus mif-2x"></span>
+    <label class="switch-original">
+        <input type="checkbox" id="Sex" name="Sex" value="true">
+        <span class="check"></span>
+    </label>
+    <span class="mif-mars mif-2x"></span>
+    <br>
+    <br>
+    <div id="wait-metro" data-role="preloader" data-type="metro" data-style="dark" style="border-radius: 20%; margin: auto; display: none;" class="preloader-metro dark-style">
+
+    </div>
+    <br>
+    @Html.ValidationSummary(true, "", new { @class = "input-validation-error" })
+    <div class="align-center">
+        <button type="submit" class="button primary">Register</button>
+        <button type="button" class="button link">@Html.ActionLink("Login","Login", "Account")</button>
+    </div>    
+}

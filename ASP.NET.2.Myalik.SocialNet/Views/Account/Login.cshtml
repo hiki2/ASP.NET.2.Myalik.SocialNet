@@ -1,0 +1,49 @@
+﻿@model ASP.NET._2.Myalik.SocialNet.Models.Registration.LoginModel
+@{
+    ViewBag.Title = "Login";
+    var ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "ParentDiv",
+        HttpMethod = "POST",
+        LoadingElementId = "wait-metro"
+    };
+}
+@Html.AntiForgeryToken()
+    @using (Ajax.BeginForm("Login", "Account", ajaxOptions))
+    {
+        <h1 class="text-light align-center">Login to Social Net</h1>
+        <hr class="thin">
+        <br>
+        <div class="input-control text full-size" data-role="input">
+            @Html.LabelFor(model => model.Email)
+            @Html.EditorFor(model => model.Email, new
+            {
+                htmlAttributes = new{ type = "text" }
+            })
+        </div>
+        <br>
+        <br>
+        <div class="input-control password full-size" data-role="input">
+            @Html.LabelFor(model => model.Password)
+            @Html.EditorFor(model => model.Password, new
+            {
+                htmlAttributes = new{ type = "password",}
+            })
+            <button class="button helper-button reveal" tabindex="-1" type="button"><span class="mif-looks"></span></button>
+        </div>
+        <label class="input-control checkbox align-right">
+            <input type="checkbox" checked data-val="true" data-val-required="Требуется поле Remember." id="RememberMe" name="RememberMe" value="true">
+            <span class="check"></span>
+            <span class="caption">Remember</span>
+        </label>
+        <div id="wait-metro" data-role="preloader" data-type="metro" data-style="dark" style="margin: auto; display: none;" class="preloader-metro dark-style"></div>
+        <br>
+         @Html.ValidationSummary(true, "", new { @class = "input-validation-error" })
+        <div class="align-center">
+            <button type="submit" class="button primary">Login...</button>
+            <button type="button" class="button link">@Html.ActionLink("Register","Register", "Account")</button>
+        </div>
+        
+    }
+
+

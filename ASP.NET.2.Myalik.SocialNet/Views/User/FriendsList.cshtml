@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ASP.NET._2.Myalik.SocialNet.Models.FriendViewModel>
+@{
+    ViewBag.Title = "Friends";
+    var isCurrentUserPage = ((ViewData["ProfileId"] == null) || (int) @Profile["id"] == (int) ViewData["ProfileId"]);
+}
+<div class="grid">
+    <div class="row cells3">
+        <div class="cell colspan2">
+            @{
+                var elements = new[]
+                {
+                    @Model.Count(e => e.Confirmed) == 0 ? "disabled" : "active",
+                    @Model.Count(e => (!e.IsRequest) && !e.Confirmed) == 0 ? "disabled" : string.Empty,
+                    @Model.Count(e => (e.IsRequest) && !e.Confirmed) == 0 ? "disabled" : string.Empty
+                };
+            }
+            <div id ="friends-tab" class="tabcontrol2" data-role="tabcontrol">
+                <ul class="tabs">
+                    <li class="@elements[0]"><a href="#frame_5_1">All Friends <span class="bg-crimson right-side" style="color: white;"> @Model.Count(e => e.Confirmed) </span></a></li>
+                    @if (isCurrentUserPage)
+                    {
+                        <li class="@elements[1]"><a href="#frame_5_2">Unconfirmed Friends <span class="bg-lightGreen right-side" style="color: white;"> @Model.Count(e => (!e.IsRequest) && (!e.Confirmed)) </span></a></li>
+                        <li class="@elements[2]"><a href="#frame_5_3">Sent Requests <span class="bg-lightBlue right-side" style="color: white;"> @Model.Count(e => (e.IsRequest) && (!e.Confirmed)) </span></a></li>
+                    }
+                </ul>
+                <div class="frames" >
+                    <div class="frame" id="frame_5_1" style="display: block;">
+                        @{ ViewBag.Function = "Delete"; }
+                        @foreach (var item in Model.Where(item => item.Confirmed))
+                        {
+                            @Html.Partial("RequestFriends", item, ViewData)
+                        }
+                    </div>
+                    @if (isCurrentUserPage)
+                    {
+                        <div class="frame" id="frame_5_2" style="display: none;">
+                            @{ ViewBag.Function = "Confirm"; }
+                            @foreach (var item in Model.Where(item => !item.IsRequest && !item.Confirmed))
+                            {
+                                @Html.Partial("RequestFriends", item)
+                            }
+                        </div>
+                        <div class="frame" id="frame_5_3" style="display: none;">
+                            @{ ViewBag.Function = "Request"; }
+                            @foreach (var item in Model.Where(item => item.IsRequest && !item.Confirmed))
+                            {
+                                @Html.Partial("RequestFriends", item)
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ASP.NET._2.Myalik.SocialNet.Models.UserInformationViewModel>
+
+@{
+    ViewBag.Title = "Admin";
+    var fromAjaxOptions = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "users-info",
+        OnSuccess = "Success",
+        OnFailure = "Failure"
+    };
+
+    var buttonAjaxOptions = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "users-info"
+    };
+
+}
+<div id="users-info">
+    <table class="table border bordered">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>E-mail</th>
+            <th>Mobile</th>
+            <th>Role</th>
+            <td>Save</td>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                using (Ajax.BeginForm("ConfigUser", "Admin", new { count = @Model.Count() }, fromAjaxOptions))
+                {
+                    <tr role="row" class="odd">
+                        <td>
+                            <input type="hidden" id="UserId" name="UserId" value="@item.UserId" />
+                            @item.UserId
+                        </td>
+                        <td>
+                            <div class="input-control text full-size">
+                                <input id="Name" name="Name" type="text" value="@item.Name" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-control text full-size">
+                                <input id="LastName" name="LastName" type="text" value="@item.LastName" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-control text full-size">
+                                <input id="Email" name="Email" type="text" value="@item.Email" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-control text full-size">
+                                <input id="Mobile" name="Mobile" type="text" value="@item.Mobile" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-control select">
+                                <select id="Role" name="Role">
+                                    @foreach (var role in Roles.GetAllRoles())
+                                    {
+                                        if (role == item.Role.ToString("G"))
+                                        {
+                                            <option selected>@role</option>
+                                        }
+                                        else
+                                        {
+                                            <option>@role</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </td>
+                        <td><button type="submit" class="button primary">Save</button></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    @Ajax.ActionLink("Get More", "Admin", new { count = Model.Count() + 5 }, buttonAjaxOptions, new { @class = "button warning" })
+    @Html.ValidationSummary(true, "", new { @class = "input-validation-error" })
+</div>
+
