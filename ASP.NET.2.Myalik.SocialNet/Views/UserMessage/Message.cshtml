@@ -1,0 +1,27 @@
+﻿@model ASP.NET._2.Myalik.SocialNet.Models.UserMessageViewModel
+
+@{ var image = Model.Profile.Avatar == null ? "/Resources/no-image-sqr.png" : $"data:image/jpeg;base64,{Convert.ToBase64String(Model.Profile.Avatar)}"; }
+<div class="row cells7 bg-lighterGray" style="margin-top: 7px">
+    <div class="cell">
+        <div class="image-container image-format-cycle">
+            <img style="width: 60px; height: 60px; border-radius: 50%; background-size: cover; background-repeat: no-repeat;" src="@image" alt="" />    
+        </div>
+    </div>
+    <div class="cell colspan6">
+        <a href="~/Home/@Model.Profile.id"><h4>@Model.Profile.Name @Model.Profile.LastName</h4></a>
+        @if (Model.Sended)
+        {
+            <span style="color: blue;">#</span>
+            <span>Sended</span>
+        }
+        else
+        {
+            <span style="color: blue;">#</span>
+            <span>Resived</span>
+        }
+        <div class="align-justify" style="margin-right: 10px;">
+            <a href="" style="color:grey">@Model.Message</a>
+            <br>
+        </div>
+    </div>
+</div>

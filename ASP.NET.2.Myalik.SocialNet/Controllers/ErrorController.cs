@@ -15,7 +15,7 @@ namespace ASP.NET._2.Myalik.SocialNet.Controllers
                 code = 404;
             if (message == null)
                 message = "Not Found";
-            return PartialView(new ErrorViewModel
+            return View(new ErrorViewModel
             {
                 Code = (int)code,
                 Message = message

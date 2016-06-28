@@ -18,6 +18,13 @@ namespace ASP.NET._2.Myalik.SocialNet.Utils.Collectors
             this.userService = userService;
             this.profileService = profileService;
         }
+        public IEnumerable<UserInformationViewModel> AllUserInformation()
+        {
+            var users = userService.GetALLEntities();
+            return from user in users
+                   let profile = profileService.GetProfileEntityByUserId(user.id)
+                   select Create(Mapper.ToView(profile), Mapper.ToView(user));
+        }
 
         public IEnumerable<UserInformationViewModel> UserInformationTop(int count)
         {
@@ -39,7 +46,7 @@ namespace ASP.NET._2.Myalik.SocialNet.Utils.Collectors
                 Mapper.ToView(userService.GetEntity(userId)));
         }
 
-        private UserInformationViewModel Create(ProfileViewModel profile, UserViewModel user)
+        private static UserInformationViewModel Create(ProfileViewModel profile, UserViewModel user)
         {
             return new UserInformationViewModel
             {

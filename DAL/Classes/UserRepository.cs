@@ -67,12 +67,23 @@ namespace DAL.Classes
 
         public IEnumerable<DalUser> GetUsersBySearchModel(DalSearch search)
         {
-            var fullName = search.NameAndSurName.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-            return context.Users.Where(user =>
-                (((fullName[0] == user.Profile.Name) && (fullName[1] == user.Profile.LastName))
-                || ((fullName[0] == user.Profile.LastName) && (fullName[1] == user.Profile.Name)))
-                && (search.Sex == user.Profile.Sex)
-                && (search.Country == user.Profile.Country.Name)).Select(Mapper.ToDal);
+            var result = context.Users.Select(element => element);
+            if (!string.IsNullOrEmpty(search.NameAndSurName))
+            {
+                var fullName = search.NameAndSurName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                result = fullName.Where((t, i)
+                    => (fullName.Length >= i + 1)
+                       && !string.IsNullOrEmpty(t))
+                    .Aggregate(result, (current, temp)
+                        => current.Where(user
+                            => (temp == user.Profile.Name)
+                               || (temp == user.Profile.LastName))
+                    );
+            }
+            result = result.Where(user =>
+                (search.Sex == user.Profile.Sex)
+                && (search.Country == user.Profile.Country.Name));
+            return result.Select(Mapper.ToDal);
         }
     }
 }

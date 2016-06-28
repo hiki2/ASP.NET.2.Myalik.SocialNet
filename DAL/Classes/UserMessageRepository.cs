@@ -30,12 +30,14 @@ namespace DAL.Classes
 
         public IEnumerable<DalUserMessage> GetAllUserMessagesByProfileId(int profileId)
         {
-            return context.UserMessages.Where(message => message.User.Profile.id == profileId).Select(Mapper.ToDal);
+            return context.UserMessages.Where(message =>
+                (message.User.Profile.id == profileId)
+                || (message.ToUser.Profile.id == profileId)).Select(Mapper.ToDal);
         }
 
         public IEnumerable<DalUserMessage> GetAllUserMessagesByUserId(int userId)
         {
-            return context.UserMessages.Where(message => message.User.id == userId).Select(Mapper.ToDal);
+            return context.UserMessages.Where(message => (message.User.id == userId) || (message.ToUser.id == userId)).Select(Mapper.ToDal);
         }
     }
 }

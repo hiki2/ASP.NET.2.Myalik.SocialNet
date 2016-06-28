@@ -1,22 +1,25 @@
-﻿@model IEnumerable<ASP.NET._2.Myalik.SocialNet.Models.UserInformationViewModel>
+﻿@model PagedList.IPagedList<ASP.NET._2.Myalik.SocialNet.Models.UserInformationViewModel>
 
 @{
     ViewBag.Title = "Admin";
-    var fromAjaxOptions = new AjaxOptions
+    var formAjaxOptions = new AjaxOptions
     {
         HttpMethod = "POST",
-        UpdateTargetId = "users-info",
-        OnSuccess = "Success",
-        OnFailure = "Failure"
-    };
-
-    var buttonAjaxOptions = new AjaxOptions
-    {
-        HttpMethod = "POST",
-        UpdateTargetId = "users-info"
+        UpdateTargetId = "ParentDiv",
+        OnSuccess = "Success"
     };
 
 }
+
+<script>
+    function Success() {
+        $.Notify({
+            caption: 'Saved',
+            content: '@ViewBag.Message',
+            type: 'success'
+        });
+    }
+</script>
 <div id="users-info">
     <table class="table border bordered">
         <thead>
@@ -31,59 +34,60 @@
         </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                using (Ajax.BeginForm("ConfigUser", "Admin", new { count = @Model.Count() }, fromAjaxOptions))
+        @foreach (var item in Model)
+        {
+            <tr role="row" class="odd">
+                @using (Ajax.BeginForm("ConfigUser", "Admin", new { page = @Model.PageNumber }, formAjaxOptions))
                 {
-                    <tr role="row" class="odd">
-                        <td>
-                            <input type="hidden" id="UserId" name="UserId" value="@item.UserId" />
-                            @item.UserId
-                        </td>
-                        <td>
-                            <div class="input-control text full-size">
-                                <input id="Name" name="Name" type="text" value="@item.Name" />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-control text full-size">
-                                <input id="LastName" name="LastName" type="text" value="@item.LastName" />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-control text full-size">
-                                <input id="Email" name="Email" type="text" value="@item.Email" />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-control text full-size">
-                                <input id="Mobile" name="Mobile" type="text" value="@item.Mobile" />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-control select">
-                                <select id="Role" name="Role">
-                                    @foreach (var role in Roles.GetAllRoles())
+                    <td>
+                        <input type="hidden" id="UserId" name="UserId" value="@item.UserId" />
+                        @item.UserId
+                    </td>
+                    <td>
+                        <div class="input-control text full-size">
+                            <input id="Name" name="Name" type="text" value="@item.Name" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-control text full-size">
+                            <input id="LastName" name="LastName" type="text" value="@item.LastName" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-control text full-size">
+                            <input id="Email" name="Email" type="text" value="@item.Email" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-control text full-size">
+                            <input id="Mobile" name="Mobile" type="text" value="@item.Mobile" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-control select">
+                            <select id="Role" name="Role">
+                                @foreach (var role in Roles.GetAllRoles())
+                                {
+                                    if (role == item.Role.ToString("G"))
                                     {
-                                        if (role == item.Role.ToString("G"))
-                                        {
-                                            <option selected>@role</option>
-                                        }
-                                        else
-                                        {
-                                            <option>@role</option>
-                                        }
+                                        <option selected>@role</option>
                                     }
-                                </select>
-                            </div>
-                        </td>
-                        <td><button type="submit" class="button primary">Save</button></td>
-                    </tr>
+                                    else
+                                    {
+                                        <option>@role</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </td>
+                    <td><button type="submit" value="save" class="button primary">Save</button></td>
+
                 }
-            }
+            </tr>
+        }
         </tbody>
     </table>
-    @Ajax.ActionLink("Get More", "Admin", new { count = Model.Count() + 5 }, buttonAjaxOptions, new { @class = "button warning" })
-    @Html.ValidationSummary(true, "", new { @class = "input-validation-error" })
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("GetPage", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing( new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "ParentDiv" }))
 </div>
 

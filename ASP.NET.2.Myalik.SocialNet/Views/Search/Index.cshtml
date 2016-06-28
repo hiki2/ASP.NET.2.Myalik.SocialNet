@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ASP.NET._2.Myalik.SocialNet.Models.CountryViewModel>
+@{
+    ViewBag.Title = "Search";
+    var ajaxOptions = new AjaxOptions
+    {
+        HttpMethod = "POSt",
+        UpdateTargetId = "search-info"
+    };
+}
+
+<div class="grid">
+    <div class="row cells3">
+        <div class="cell colspan2">
+            <div id="search-info">
+                   
+            </div>
+        </div>
+        <div class="cell">
+
+            @using (Ajax.BeginForm("SearchUsers", "Search", ajaxOptions,new {@class="example"}))
+            {
+                <h4 style="margin-top: 20px;">Name / Last Name</h4>
+                <div class="input-control text full-size" data-role="input">
+                    <input id="NameAndSurName" name="NameAndSurName" type="text">
+                    <button type="submit" value="send" class="button">
+                        <span class="mif-search">
+                        </span>
+                    </button>
+                </div>
+                <h4 style="margin-top: 20px;">Country</h4>
+                <div class="input-control select full-size">
+                    <select id="Country" name="Country">
+                        @foreach (var country in Model)
+                        {
+                            <option>@country.Name</option>
+                        }
+                    </select>
+                </div>
+                <h4 style="margin-top: 20px;">Sex</h4>
+                <span class="mif-female mif-2x"></span>
+                <label class="switch-original"style="margin-bottom: 20px;">
+                    <input type="checkbox" id="Sex" name="Sex" value="true">
+                    <span class="check"></span>
+                </label>
+                    <span class="mif-male mif-2x"></span>
+
+            }
+        </div>
+    </div>
+</div>

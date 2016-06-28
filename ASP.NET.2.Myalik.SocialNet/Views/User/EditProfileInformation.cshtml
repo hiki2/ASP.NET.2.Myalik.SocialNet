@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Edit";
 }
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditProfileInformation", "User", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <button class="image-button" style="margin-bottom: 15px; width: 250px;">Save
+        <button class="image-button" tyle="margin-bottom: 15px;">Save
             <span class="icon mif-folder"></span>
         </button>
     </div>

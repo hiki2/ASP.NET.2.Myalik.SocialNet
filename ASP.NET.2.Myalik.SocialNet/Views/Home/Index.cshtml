@@ -13,7 +13,9 @@
                                 <span class="icon mif-bubbles"></span>
                             </button>
                             <div data-role="dialog" id="MessageDialog" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" class="padding20 dialog">
-                                @Html.Partial("../UserMessage/SendMessage")
+                                <div id="MessagePlace">
+                                    @Html.Partial("../UserMessage/SendMessage")
+                                </div>
                             </div>
                         </div>
                         <div class="cell colspan2">

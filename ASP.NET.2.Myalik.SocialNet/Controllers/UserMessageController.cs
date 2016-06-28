@@ -11,6 +11,7 @@ using BLL.Services.Interface;
 
 namespace ASP.NET._2.Myalik.SocialNet.Controllers
 {
+    [Authorize]
     [MyExceptionFilter]
     public class UserMessageController : Controller
     {
@@ -31,6 +32,13 @@ namespace ASP.NET._2.Myalik.SocialNet.Controllers
             this.profileService = profileService;
         }
 
+        [HttpGet]
+        public ActionResult SendMessage()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
         public ActionResult SendMessage(int toProfileId, string message)
         {
             if (!ModelState.IsValid) return PartialView("SendMessage");
@@ -51,11 +59,7 @@ namespace ASP.NET._2.Myalik.SocialNet.Controllers
                 UserId = userService.GetUserEntityByProfileId((int) Profile["id"]).id,
                 MessageId = messageId
             });
-            return PartialView("MessageSended", new UserInformationViewModel
-            {
-                Name = profile.Name,
-                LastName = profile.LastName
-            });
+            return Json(new { profile.Name, profile.LastName }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult UserMessages(int? profileId)

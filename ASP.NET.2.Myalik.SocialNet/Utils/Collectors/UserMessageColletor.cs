@@ -41,8 +41,8 @@ namespace ASP.NET._2.Myalik.SocialNet.Utils.Collectors
                         Message = messageService.GetEntity(message.MessageId).MessageBody,
                         PostedDate = message.PostedDate,
                         Profile = Mapper.ToView(profileService.GetProfileEntityByUserId(message.UserId == userId
-                            ? message.UserId
-                            : message.ToUserId)),
+                            ? message.ToUserId
+                            : message.UserId)),
                         Sended = userId == message.UserId
                     });
         }

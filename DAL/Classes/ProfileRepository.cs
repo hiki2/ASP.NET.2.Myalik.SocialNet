@@ -57,12 +57,23 @@ namespace DAL.Classes
 
         public IEnumerable<DalProfile> GetProfilesBySearchModel(DalSearch search)
         {
-            var fullName = search.NameAndSurName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            return context.Profiles.Where(profile =>
-                (((fullName[0] == profile.Name) && (fullName[1] == profile.LastName)) 
-                || ((fullName[0] == profile.LastName) && (fullName[1] == profile.Name)))
-                && (search.Sex == profile.Sex)
-                && (search.Country == profile.Country.Name)).Select(Mapper.ToDal);
+            var result = context.Profiles.Select(element => element);
+            if (!string.IsNullOrEmpty(search.NameAndSurName))
+            {
+                var fullName = search.NameAndSurName.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                for(var i = 0; i < fullName.Length; i++)
+                {
+                    if ((fullName.Length < i + 1) || string.IsNullOrEmpty(fullName[i])) continue;
+                    var temp = fullName[i];
+                    result = result.Where(profile =>
+                        (temp == profile.Name)
+                        || (temp == profile.LastName));
+                }
+            }
+            result = result.Where(profile =>
+                (search.Sex == profile.Sex)
+                && (search.Country == profile.Country.Name));
+            return result.Select(Mapper.ToDal);
         }
 
         public IEnumerable<DalProfile> GetProfilesBySex(bool sex)

@@ -101,6 +101,15 @@ namespace ASP.NET._2.Myalik.SocialNet.Mappers
                 Sex = search.Sex
             };
         }
+
+        public static CountryViewModel ToView(CountryEntity country)
+        {
+            return new CountryViewModel
+            {
+                id = country.id,
+                Name = country.Name
+            };
+        }
         #endregion
 
         #region Methods ToBll
@@ -186,6 +195,15 @@ namespace ASP.NET._2.Myalik.SocialNet.Mappers
                 Country = search.Country,
                 NameAndSurName = search.NameAndSurName,
                 Sex = search.Sex
+            };
+        }
+
+        public static CountryEntity ToBll(CountryViewModel country)
+        {
+            return new CountryEntity
+            {
+                id = country.id,
+                Name = country.Name
             };
         }
         #endregion

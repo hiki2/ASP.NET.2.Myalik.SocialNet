@@ -18,7 +18,9 @@
                     </div>
                 </div>
                 <div class="cell colspan4">
-                    <a href="~/Home/@message.PostedUser.id"><h3>@message.PostedUser.Name @message.PostedUser.LastName</h3></a>
+                    <a href="~/Home/@message.PostedUser.id">
+                        <h3>@message.PostedUser.Name @message.PostedUser.LastName</h3>
+                    </a>
                     <span style="color: blue;">#</span><span style="color: grey">@message.PosteDate.Date.ToShortDateString()</span>
                     <div class="align-justify" style="margin-right: 10px;">
                         @message.Message.MessageBody
@@ -27,15 +29,15 @@
             </div>
         }
         <div class="input-control textarea full-size" data-role="input">
-        @using (Ajax.BeginForm("AddWallMessage", "User", new AjaxOptions { UpdateTargetId = "Wall",HttpMethod = "POST" }))
-        {
-            <input type="hidden" value="@ViewData["ProfileId"]" id="profileId" name="profileId"/>
-            <textarea id="message" name="message" class="block-shadow-impact" rows="3" maxlength="200" wrap="hard" placeholder="Leave a comment..." style="resize: none; border: none; margin-bottom: 10px;"></textarea>
-            <button type="submit" value="send" class="image-button" style = "margin-bottom: 15px; width: 100px">
-                Send Message
-                <span class="icon mif-bubbles"></span>
-            </button>
-        }
+            @using (Ajax.BeginForm("AddWallMessage", "User", new AjaxOptions { UpdateTargetId = "Wall", HttpMethod = "POST" }))
+            {
+                <input type="hidden" value="@ViewData["ProfileId"]" id="profileId" name="profileId" />
+                <textarea id="message" name="message" class="block-shadow-impact" rows="3" maxlength="200" wrap="hard" placeholder="Leave a comment..." style="resize: none; border: none; margin-bottom: 10px;"></textarea>
+                <button type="submit" value="send" class="image-button" style="margin-bottom: 15px; width: 100px">
+                    Send Message
+                    <span class="icon mif-bubbles"></span>
+                </button>
+            }
         </div>
     </div>
 </div>

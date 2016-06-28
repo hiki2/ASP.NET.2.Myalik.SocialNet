@@ -2,9 +2,8 @@
     var ajaxOptions = new AjaxOptions
     {
         HttpMethod = "POST",
-        UpdateTargetId = "MessageBox",
-        OnSuccess = "Success",
-        OnFailure = "Failure"
+        UpdateTargetId = "Sended",
+        OnSuccess = "processJsonSuperData",
     };
 }
 
@@ -12,7 +11,7 @@
     <h2 style="font-family: 'Chewy', cursive; font-size: 16pt;">Input you're message...</h2>
     @using (@Ajax.BeginForm("SendMessage", "UserMessage", ajaxOptions))
     {
-        <input type="hidden" value="@ViewData["ProfileId"]" id="toProfileId" name="toProfileId" />
+        <input type="hidden" value="@ViewData["ProfileId"]" id="toProfileId" name="toProfileId"/>
         <div class="input-control textarea full-size" data-role="input">
             <textarea id="message" name="message" class="block-shadow-impact" rows="3" maxlength="200" wrap="hard" placeholder="Message..." style="resize: none; border: none; margin-bottom: 10px;"></textarea>
         </div>
@@ -21,3 +20,15 @@
         </button>
     }
 </div>
+<div id="Sended">
+    
+</div>
+<script>
+    function processJsonSuperData(data) {
+        var target = $("#MessageBox");
+        target.empty();
+        var user = data;
+        target.append("<h2 style=\"font-family: 'Chewy', cursive; font-size: 16pt;\"> Sended to " + user.Name
+            + " " + user.LastName + "</h2>");
+    }
+</script>

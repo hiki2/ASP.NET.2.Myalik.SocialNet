@@ -1,2 +1,48 @@
-﻿@model ASP.NET._2.Myalik.SocialNet.Models.UserMessageViewModel
-
+﻿@model IEnumerable<ASP.NET._2.Myalik.SocialNet.Models.UserMessageViewModel>
+@{
+    ViewBag.Title = "UserMessages";
+}
+<div class="grid">
+    <div class="row cells6">
+        <div class="cell"></div>
+        <div class="cell colspan4">
+            @{
+                var elements = new[]
+                {
+                    !@Model.Any() ? "disabled" : "active",
+                    @Model.Count(e => (!e.Sended)) == 0 ? "disabled" : string.Empty,
+                    @Model.Count(e => (e.Sended)) == 0 ? "disabled" : string.Empty
+                };
+            }
+            <div id="friends-tab" class="tabcontrol2" data-role="tabcontrol">
+                <ul class="tabs">
+                    <li class="@elements[0]"><a href="#frame_5_1">All Messages <span class="bg-crimson right-side" style="color: white;"> @Model.Count() </span></a></li>
+                    <li class="@elements[1]"><a href="#frame_5_2">Resived Messages <span class="bg-lightGreen right-side" style="color: white;"> @Model.Count(e => (!e.Sended)) </span></a></li>
+                    <li class="@elements[2]"><a href="#frame_5_3">Sent Messages <span class="bg-lightBlue right-side" style="color: white;"> @Model.Count(e => (e.Sended)) </span></a></li>
+                </ul>
+                <div class="frames">
+                    <div class="frame" id="frame_5_1" style="display: block;">
+                        @foreach (var item in Model)
+                        {
+                            @Html.Partial("Message", item)
+                        }
+                    </div>
+                    <div class="frame" id="frame_5_2" style="display: none;">
+                        @{ ViewBag.Function = "Resive"; }
+                        @foreach (var item in Model.Where(item => !item.Sended))
+                        {
+                            @Html.Partial("Message", item)
+                        }
+                    </div>
+                    <div class="frame" id="frame_5_3" style="display: none;">
+                        @foreach (var item in Model.Where(item => item.Sended))
+                        {
+                            @Html.Partial("Message", item)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cell"></div>
+    </div>
+</div>

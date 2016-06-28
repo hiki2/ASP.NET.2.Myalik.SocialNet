@@ -8,9 +8,9 @@
         LoadingElementId = "wait-metro"
     };
 }
-@Html.AntiForgeryToken()
 @using (Ajax.BeginForm("Register", "Account", ajaxOptions))
 {
+    @Html.AntiForgeryToken()
     <h1 class="text-light align-center">Registration</h1>
     <hr class="thin">
     <br>

@@ -14,8 +14,8 @@ namespace ASP.NET._2.Myalik.SocialNet.App_Start
                 .Include("~/scripts/jquery-1.10.2.min.js")
                 .Include("~/scripts/jquery.unobtrusive-ajax.min.js")
                  //.Include("~/scripts/jquery.validate.unobtrusive.min.js")
-                 //.Include("~/scripts/jquery.validate.min.js")
-                 //.Include("~/scripts/jquery.validate-vsdoc.js")
+                 .Include("~/scripts/ai.0.15.0-build58334.min.js")
+                .Include("~/scripts/jquery-ui-1.11.4.min.js")
                 .Include("~/scripts/metro.min.js")
                 //.Include("~/scripts/modernizr-2.6.2.js")
                 );
@@ -26,7 +26,7 @@ namespace ASP.NET._2.Myalik.SocialNet.App_Start
                 .Include("~/Content/metro-rtl.min.css")
                 .Include("~/Content/metro-schemes.min.css")
                 .Include("~/Content/metro.min.css")
-                //.Include("~/Content/Site.css")
+                .Include("~/Content/PagedList.css")
                 );
         }
     }

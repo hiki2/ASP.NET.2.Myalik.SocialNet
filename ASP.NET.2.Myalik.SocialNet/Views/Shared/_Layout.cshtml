@@ -36,14 +36,6 @@
             $.ajaxSetup({ cache: false });
         });
 
-        function Success() {
-            $.Notify({
-                caption: 'Saved',
-                content: '@ViewBag.Message',
-                type: 'success'
-            });
-        }
-
         function Failure() {
             $.Notify({
                 caption: 'Failed',
@@ -74,9 +66,9 @@
                 <div class="app-bar-pullbutton automatic"></div>
                 <ul class="app-bar-menu place-right" data-flexdirection="reverse">
                     <li>
-                        <div class="input-control text">
-                            <input type="text" placeholder="Search...">
-                        </div>
+                        <a href="@Url.Action("Index","Search")">
+                            <span class="mif-search mif-2x"></span>
+                        </a>
                     </li>
                     <li>
                         <a href="" class="dropdown-toggle">Help</a>
@@ -95,8 +87,7 @@
         <hr class="thin">
         <ul class="vertical-menu full-size" style="color: #FFFFFF;">
             <li><a href="../Friends/@Profile["id"]"><span class="mif-stack"></span> Friends</a></li>
-            <li><a href=""><span class="mif-bubbles"></span> Messages</a></li>
-            <li><a href=""><span class="mif-images"></span> Images</a></li>
+            <li><a href="@Url.Action("UserMessages","UserMessage")"><span class="mif-bubbles"></span> Messages</a></li>
             @if (User.IsInRole("Admin"))
             {
                 <li><a href=@Url.Action("Admin","Admin")><span class="mif-widgets"></span> Admin</a></li>
@@ -107,7 +98,6 @@
         <span class="charm-closer"></span>
     </div>
     <div id="ParentDiv" class="container page-content" style="margin-top: 80px; margin-bottom: 80px;">
-        
         @RenderBody()
     </div>
     <footer class="align-center fixed-bottom full-size bg-darkerGray">
